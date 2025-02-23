@@ -7,10 +7,16 @@ import New from './pages/New';
 import Notfound from './pages/Notfound';
 
 import Button from './components/Button';
+import Header from './components/Header';
 
 function App() {
   return (
   <>
+     <Header title={'Header'} 
+     leftChild={<Button text={"Left"}/>}
+     rightChild={<Button text={"right"}/>}
+     />
+    
       <Button 
       text={'123'} 
       type={"DEFAULT"}
