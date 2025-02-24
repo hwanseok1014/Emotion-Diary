@@ -22,11 +22,56 @@ const MockData = [{
   content: "2번 일기 내용",
 }]
 
+const reducer=(state,action)=>{
+  switch(action.type){
+    case 'Create':
+      return [action.data,...state];
+    case 'Update':
+      return state.map((diary)=>
+        String(diary.id) === String(action.data.id)
+        ? action.data 
+        : diary
+      );
+    case 'Delete':
+      return state.filter((diary)=>String(diary.id) !==String(action.data.id));
+ }
+};
 
 function App() {
   const [data,dispatch] =useReducer(reducer,MockData);
   const idRef =useRef(3);
 
+  const onCreate= (createDate,emtionId,content)=>{
+    dispatch({
+      type:'Create',
+      data:{
+        id: idRef.current++,
+        createDate: createDate,
+        emtionId: emtionId,
+        content: content,
+      },
+    })
+  };
+
+  const onUpdate = (id,createDate, emotionId, content)=>{
+    dispatch({
+      type: 'Update',
+      data: {
+        id: id,
+        createDate:createDate,
+        emotionId:emotionId,
+        content: content,
+      },
+    })
+  };
+  const onDelete=(id)=>{
+    dispatch({
+      type: 'Delete',
+      data:{
+        id: id,
+      }
+    },);
+  }
 
   return (
   <>
