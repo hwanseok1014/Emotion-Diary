@@ -1,5 +1,8 @@
+import { useParams } from "react-router-dom";
+
 const Editor = ()=>{
-    return <div>Editor</div>
+    const params = useParams();
+    return <div>{params.id}번</div>
 }
 
 export default Editor;
