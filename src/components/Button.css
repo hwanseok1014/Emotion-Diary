@@ -1,6 +1,7 @@
 .Button{
     background-color: rgb(236,236,236);
-    cursor: none;
+    cursor: pointer;
+    border: none;
     border-radius: 5px;
     
     padding: 10px 20px ;
@@ -18,3 +19,4 @@
     background-color: rgb(253,86,95);
     color: white;
 }
+

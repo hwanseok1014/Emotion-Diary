@@ -8,6 +8,8 @@ import New from './pages/New';
 import Editor from './pages/Editor';
 import Notfound from './pages/Notfound';
 import { useReducer } from 'react';
+import Header from './components/Header';
+import Button from './components/Button';
 
 
 const MockData = [{
@@ -78,12 +80,15 @@ function App() {
     },);
   }
 
+  const Today= new Date(new Date().getTime()).toISOString().slice(0,7)
+
+
+  const onClick=()=>{
+    return(<></>);
+  }
+
   return (
   <>
-      <button onClick={()=>onCreate(new Date().getTime(),1,'Hello')}>일기 추가 테스트</button>
-      <button onClick={()=>onUpdate(1,new Date().getTime(),3,'수정된 일기입니다.')}>일기 수정 테스트</button>
-      <button onClick={()=>onDelete(1)}>일기 삭제 테스트</button>
-    
         <DiarystateContext.Provider value={state}>
           <DiaryDispathcContex.Provider value={{onCreate,onUpdate,onDelete}}>
             <Routes>
@@ -96,7 +101,6 @@ function App() {
           </DiaryDispathcContex.Provider>   
         </DiarystateContext.Provider>
   </>
-
   );
 }
 
