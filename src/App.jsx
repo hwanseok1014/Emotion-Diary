@@ -1,6 +1,6 @@
 import './App.css';
 import {Routes, Route, Link, data} from "react-router-dom";
-import {useRef} from 'react';
+import {createContext, useRef} from 'react';
 
 import Home from './pages/Home';
 import Diary from './pages/Diary';
@@ -34,11 +34,16 @@ const reducer=(state,action)=>{
       );
     case 'Delete':
       return state.filter((diary)=>String(diary.id) !==String(action.data.id));
- }
+    default:
+      return state;
+ };
 };
 
+export const DiarystateContext =createContext();
+export const DiaryDispathcContex=createContext();
+
 function App() {
-  const [data,dispatch] =useReducer(reducer,MockData);
+  const [state,dispatch] =useReducer(reducer,MockData);
   const idRef =useRef(3);
 
   const onCreate= (createDate,emtionId,content)=>{
@@ -78,14 +83,18 @@ function App() {
       <button onClick={()=>onCreate(new Date().getTime(),1,'Hello')}>일기 추가 테스트</button>
       <button onClick={()=>onUpdate(1,new Date().getTime(),3,'수정된 일기입니다.')}>일기 수정 테스트</button>
       <button onClick={()=>onDelete(1)}>일기 삭제 테스트</button>
-      <Routes>
-        <Route path="/" element={<Home/>}/>
-        <Route path="/new" element={<New/>}/>
-        <Route path="/diary/:id" element={<Diary/>}/>
-        <Route path="/edit/:id" element={<Editor/>}/>
-        <Route path="*" element={<Notfound/>}/>
-      </Routes>
-  
+    
+        <DiarystateContext.Provider value={state}>
+          <DiaryDispathcContex.Provider value={{onCreate,onUpdate,onDelete}}>
+            <Routes>
+              <Route path="/" element={<Home/>}/>
+              <Route path="/new" element={<New/>}/>
+              <Route path="/diary/:id" element={<Diary/>}/>
+              <Route path="/edit/:id" element={<Editor/>}/>
+              <Route path="*" element={<Notfound/>}/>
+            </Routes>
+          </DiaryDispathcContex.Provider>   
+        </DiarystateContext.Provider>
   </>
 
   );
