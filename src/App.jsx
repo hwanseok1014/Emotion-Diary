@@ -14,12 +14,17 @@ import Button from './components/Button';
 
 const MockData = [{
   id:1,
-  createDate: new Date().getTime(),
+  createDate: new Date("2025-03-02").getTime(),
   emotionId: 1,
   content: "1번 일기 내용",
 }, {
   id:2,
-  createDate: new Date().getTime(),
+  createDate: new Date("2025-03-01").getTime(),
+  emotionId: 2,
+  content: "2번 일기 내용",
+}, {
+  id:3,
+  createDate: new Date("2025-02-28").getTime(),
   emotionId: 2,
   content: "2번 일기 내용",
 }]
