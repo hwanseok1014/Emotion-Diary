@@ -50,9 +50,7 @@ const Home =( ) =>{
         rightChild={<Button text={'>'} 
         onClick={()=>onIncreaseMonth()}/>}
         />
-        <DiaryList data={monthlyData}>
-
-        </DiaryList>
+        <DiaryList data={monthlyData}/>
 
     </div>
     )
