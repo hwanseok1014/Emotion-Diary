@@ -9,11 +9,11 @@ const DiaryItem = ({id, emotionId, createDate,content})=>{
 
     return<div className='DiaryItem'>
         <div className={`Image_section Image_section_${emotionId}`}
-        onClick={()=>{navigation(`/diary/${id}`)}}>
+        onClick={()=>navigation(`/diary/${id}`)}>
             <img src={getEmotionImage(emotionId)}/>
         </div>
         <div className='Info_section'
-        onClick={()=>{navigation(`/diary/${id}`)}}>
+        onClick={()=>navigation(`/diary/${id}`)}>
             <div className='created_date'>
               {new Date(createDate).toLocaleDateString()}
             </div>
@@ -22,7 +22,7 @@ const DiaryItem = ({id, emotionId, createDate,content})=>{
             </div>
         </div>
         <div className='Button_section'>
-            <Button text={'수정하기'} onClick={()=>{navigation(`/edit/${id}`)}}/>
+            <Button text={'수정하기'} onClick={()=>navigation(`/edit/${id}`)}/>
         </div>
     </div>
 
