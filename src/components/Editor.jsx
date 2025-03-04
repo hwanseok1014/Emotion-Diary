@@ -23,8 +23,39 @@ const emotionList =[{
     emotionName:'끔찍함',
 }]
 
+const getStringedDate = (targetDate) =>{
+    //날짜 -> YYYY-MM-DD
+    let yeat = targetDate.getFullYear();
+    let month = targetDate.getMonth()+1;
+    let date = targetDate.getDate();
+
+    if( month < 10 ){
+        month =`0${month}`;
+    }
+    if( date < 10) {
+        date = `0${date}`;
+    }
+
+    return `${year}-${month}-${date}`;
+}
+
 const Editor =()=>{
     const [emotionId, setEmotionId] = useState('');
+    const [newdata,setNewData] = useState({
+        createDate:'',
+        emotionId: '',
+        content: '',
+    });
+
+    const onhandleChange =(e)=>{
+        const {name, value} =e.target.name;
+        setNewData({
+            [name]:value,
+            ...newdata,
+        })
+        console.log(newdata);
+    }
+
     const EmotionClick = (e)=>{
         setEmotionId();         
     }
@@ -32,7 +63,9 @@ const Editor =()=>{
     return <div className='Editor'>
         <section className='date_section'>
             <h4>오늘의 날짜</h4>
-            <input type='date'/>        
+            <input type='date'
+            name='createDate'
+            onChange={onhandleChange}/>        
         </section>
         
         <section className='emotion_section'>
@@ -47,7 +80,10 @@ const Editor =()=>{
         
         <section className='content_section'>
             <h4>오늘의 일기</h4>
-            <textarea placeholder='오늘은 어땠나요?'/>
+            <textarea 
+            name='content'
+            onChange={onhandleChange}
+            placeholder='오늘은 어땠나요?'/>
         </section>
 
         <section className='button_section'>
