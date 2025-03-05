@@ -25,7 +25,7 @@ const emotionList =[{
 
 const getStringedDate = (targetDate) =>{
     //날짜 -> YYYY-MM-DD
-    let yeat = targetDate.getFullYear();
+    let year = targetDate.getFullYear();
     let month = targetDate.getMonth()+1;
     let date = targetDate.getDate();
 
@@ -40,18 +40,22 @@ const getStringedDate = (targetDate) =>{
 }
 
 const Editor =()=>{
-    const [emotionId, setEmotionId] = useState('');
     const [newdata,setNewData] = useState({
-        createDate:'',
-        emotionId: '',
+        createDate:new Date(),
+        emotionId: 3,
         content: '',
     });
 
-    const onhandleChange =(e)=>{
-        const {name, value} =e.target.name;
+    const onChangenewdata =(e)=>{
+        let {name, value} =e.target;
+
+        if(name === "createDate"){
+           value = new Date(value);
+        }
+
         setNewData({
-            [name]:value,
             ...newdata,
+            [name]:value,
         })
         console.log(newdata);
     }
@@ -64,8 +68,9 @@ const Editor =()=>{
         <section className='date_section'>
             <h4>오늘의 날짜</h4>
             <input type='date'
+            value={getStringedDate(newdata.createDate)}
             name='createDate'
-            onChange={onhandleChange}/>        
+            onChange={onChangenewdata}/>        
         </section>
         
         <section className='emotion_section'>
@@ -74,7 +79,16 @@ const Editor =()=>{
                 {emotionList.map((item)=>
                 <EmotionItem key={item.emotionId} 
                 {...item}
-                isSelected={item.emotionId === emotionId}/>)}
+                isSelected={item.emotionId === newdata.emotionId}
+                onClick={()=>
+                    onChangenewdata({
+                        target: {
+                            name: "emotionId",
+                            value: item.emotionId,
+                        }
+                    })/*button 태그는 name, value 속성 x ,event.target 수동으로 생성
+                     React 컴포넌트 자체는 onClick 직접 처리 x, 내부에서 직접 실행   */
+                }/>)} 
             </div>
         </section>
         
@@ -82,7 +96,7 @@ const Editor =()=>{
             <h4>오늘의 일기</h4>
             <textarea 
             name='content'
-            onChange={onhandleChange}
+            onChange={onChangenewdata}
             placeholder='오늘은 어땠나요?'/>
         </section>
 
