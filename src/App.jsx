@@ -53,13 +53,13 @@ function App() {
   const [state,dispatch] =useReducer(reducer,MockData);
   const idRef =useRef(3);
 
-  const onCreate= (createDate,emtionId,content)=>{
+  const onCreate= (createDate,emotionId,content)=>{
     dispatch({
       type:'Create',
       data:{
         id: idRef.current++,
         createDate: createDate,
-        emtionId: emtionId,
+        emotionId: emotionId,
         content: content,
       },
     })
@@ -87,10 +87,6 @@ function App() {
 
   const Today= new Date(new Date().getTime()).toISOString().slice(0,7)
 
-
-  const onClick=()=>{
-    return(<></>);
-  }
 
   return (
   <>
