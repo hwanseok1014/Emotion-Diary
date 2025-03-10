@@ -9,13 +9,18 @@ import { useContext } from "react";
 const Edit = ()=>{
     const navigation = useNavigate();
     const {id}=useParams()
-    const {onDelete} = useContext(DiaryDispathcContex);
+    const {onDelete, onUpdate} = useContext(DiaryDispathcContex);
 
     const onClickDelete=()=>{
         if( window.confirm("일기를 정말 삭제할까요?다시 복구되지 않아요!")){
             onDelete(id);
             navigation('/',{replace:true});
         } 
+    }
+
+    const onClickUpdate= (newdata) =>{
+        onUpdate(id,newdata.createDate,newdata.emotionId,newdata.content);
+        navigation('/',{replace:true});
     }
 
     return <div>
@@ -26,7 +31,7 @@ const Edit = ()=>{
         text={'삭제하기'}
         onClick={onClickDelete}
         type={'NEGATIVE'}/>}/>
-        <Editor/>
+        <Editor onSubmit={onClickUpdate} />
     </div>
 }
 
