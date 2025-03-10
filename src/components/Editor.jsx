@@ -3,7 +3,7 @@ import EmotionItem from './EmotionItem';
 import Button from './Button';
 
 import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 const emotionList =[{
     emotionId:1,
@@ -41,7 +41,7 @@ const getStringedDate = (targetDate) =>{
     return `${year}-${month}-${date}`;
 }
 
-const Editor =({onSubmit})=>{
+const Editor =({initState,onSubmit})=>{
     const [newdata,setNewData] = useState({
         createDate:new Date(),
         emotionId: 3,
@@ -67,6 +67,13 @@ const Editor =({onSubmit})=>{
         })
         console.log(newdata);
     }
+
+    useEffect(()=>{
+        if(initState){
+        console.log(initState)
+        setNewData({...initState,
+            createDate: new Date(Number(initState.createDate)),
+    })}},[initState])
 
     return <div className='Editor'>
         <section className='date_section'>
@@ -98,7 +105,8 @@ const Editor =({onSubmit})=>{
         
         <section className='content_section'>
             <h4>오늘의 일기</h4>
-            <textarea 
+            <textarea
+            value={newdata.content} 
             name='content'
             onChange={onChangenewdata}
             placeholder='오늘은 어땠나요?'/>
