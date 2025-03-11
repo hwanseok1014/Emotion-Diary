@@ -3,11 +3,8 @@ import getEmotionImage from '../utill/get-emotion-image';
 import emotionList from '../utill/constant';
 
 
-const Viewer =()=>{
-    const emotionId =2;
+const Viewer =({createDate,emotionId,content})=>{
     const emotionItem = emotionList.find((item)=>String(item.emotionId) ===String(emotionId));
-
-    const content ='수업이 늦게 끝나요';
    
     return(
         <div className='Viewer'>
