@@ -4,26 +4,8 @@ import Button from './Button';
 
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
+import emotionList from '../utill/constant';
 
-const emotionList =[{
-    emotionId:1,
-    emotionName:'완전 좋음',
-},{
-    emotionId:2,
-    emotionName:'좋음',
-},
-{
-    emotionId:3,
-    emotionName:'그럭 저럭',
-},
-{
-    emotionId:4,
-    emotionName:'나쁨',
-},
-{
-    emotionId:5,
-    emotionName:'끔찍함',
-}]
 
 const getStringedDate = (targetDate) =>{
     //날짜 -> YYYY-MM-DD
