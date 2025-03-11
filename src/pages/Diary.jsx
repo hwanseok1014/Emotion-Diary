@@ -1,21 +1,31 @@
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Header from "../components/Header";
 import Button from "../components/Button";
-import { DiarystateContext } from "../App";
-import { useContext } from "react";
 import Viewer from "../components/Viewer";
+import useDiary from "../Hooks/useDiary";
 
 const Diary =() =>{
-    const state =useContext(DiarystateContext);
+    const navigation = useNavigate();
     const params = useParams();
     
+    const curDiaryItem =useDiary(params.id);
+    
+    if(!curDiaryItem){
+        return<div>데이터 로딩중...!</div>
+    }
+
+    const {createDate,emotoinId, content} = curDiaryItem;
+
     return<div>
         <Header
-        title={'2025-03-11'}
-        leftChild={<Button text={'< 뒤로가기'}/>}
-        rightChild={<Button text={'수정하기'}/>}/>
+        title={'s'}
+        leftChild={<Button text={'< 뒤로가기'}
+        onClick={()=> navigation(-1) }/>}
+        rightChild={<Button text={'수정하기'}
+        />}/>
+        {console.log(curDiaryItem)}
         
-        <Viewer/>
+        <Viewer emotoinId={emotoinId} content />
     </div>
 
 }

@@ -8,7 +8,6 @@ const Viewer =()=>{
     const emotionItem = emotionList.find((item)=>String(item.emotionId) ===String(emotionId));
 
     const content ='수업이 늦게 끝나요';
-
    
     return(
         <div className='Viewer'>
