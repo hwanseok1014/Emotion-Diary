@@ -1,6 +1,6 @@
 import './App.css';
 import {Routes, Route, Link, data} from "react-router-dom";
-import {createContext, useRef} from 'react';
+import {act, createContext, useEffect, useRef, useState} from 'react';
 
 import Home from './pages/Home';
 import Diary from './pages/Diary';
@@ -13,6 +13,8 @@ import { useReducer } from 'react';
 const reducer=(state,action)=>{
   let nextstate;
   switch(action.type){
+    case 'InitData':
+      return action.data;
     case 'Create':
       nextstate=[action.data,...state];
       break;
@@ -37,8 +39,38 @@ export const DiarystateContext =createContext();
 export const DiaryDispathcContex=createContext();
 
 function App() {
+  const [isLoading, setIsLoading]=useState(true);
   const [state,dispatch] =useReducer(reducer,[]);
-  const idRef =useRef(3);
+  const idRef =useRef(0);
+
+  useEffect(()=>{
+    const storedData =localStorage.getItem("diary");
+    if(!storedData){
+      return;
+    }
+    const parseData = JSON.parse(storedData);
+
+    if(!Array.isArray(parseData)){
+      setIsLoading(false);
+      return;
+    }
+
+    let maxId = 0;
+    parseData.forEach((item)=>{
+      if(Number(item.id)> maxId){
+        maxId = Number(item.id)
+      }
+    })
+
+    idRef.current = maxId +1;
+
+    dispatch({
+      type:'InitData',
+      data: parseData,
+    })
+    setIsLoading(false);
+
+  },[])
 
   const onCreate= (createDate,emotionId,content)=>{
     dispatch({
@@ -74,6 +106,9 @@ function App() {
 
   const Today= new Date(new Date().getTime()).toISOString().slice(0,7)
 
+  if(isLoading){
+    return <div>...로딩중</div>
+  }
 
   return (
   <>
