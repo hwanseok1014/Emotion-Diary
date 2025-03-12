@@ -8,49 +8,36 @@ import New from './pages/New';
 import Edit from './pages/Edit';
 import Notfound from './pages/Notfound';
 import { useReducer } from 'react';
-import Header from './components/Header';
-import Button from './components/Button';
 
-
-const MockData = [{
-  id:1,
-  createDate: new Date("2025-03-02").getTime(),
-  emotionId: 1,
-  content: "1번 일기 내용",
-}, {
-  id:2,
-  createDate: new Date("2025-03-01").getTime(),
-  emotionId: 2,
-  content: "2번 일기 내용",
-}, {
-  id:3,
-  createDate: new Date("2025-02-28").getTime(),
-  emotionId: 2,
-  content: "2번 일기 내용",
-}]
 
 const reducer=(state,action)=>{
+  let nextstate;
   switch(action.type){
     case 'Create':
-      return [action.data,...state];
+      nextstate=[action.data,...state];
+      break;
     case 'Update':
-      return state.map((diary)=>
+      nextstate=state.map((diary)=>
         String(diary.id) === String(action.data.id)
         ? action.data 
         : diary
       );
+      break;
     case 'Delete':
-      return state.filter((diary)=>String(diary.id) !==String(action.data.id));
+      nextstate =state.filter((diary)=>String(diary.id) !==String(action.data.id));
+      break;
     default:
-      return state;
+      nextstate= state;
  };
+ localStorage.setItem('diary', JSON.stringify(nextstate));
+ return nextstate;
 };
 
 export const DiarystateContext =createContext();
 export const DiaryDispathcContex=createContext();
 
 function App() {
-  const [state,dispatch] =useReducer(reducer,MockData);
+  const [state,dispatch] =useReducer(reducer,[]);
   const idRef =useRef(3);
 
   const onCreate= (createDate,emotionId,content)=>{

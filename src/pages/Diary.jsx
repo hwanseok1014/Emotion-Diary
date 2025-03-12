@@ -13,7 +13,7 @@ const Diary =() =>{
     
     if(!curDiaryItem){
         return<div>데이터 로딩중...!</div>
-    }/*useEffect는 컴퍼넌트가 렌더링된 이후에만 실행행이 되기 때문에, 
+    }/*useEffect는 컴퍼넌트가 렌더링된 이후에만 실행이 되기 때문에, 
     초반에 undefined만 반환, 이후에 데이터 저장*/
 
     const {createDate,emotionId, content} = curDiaryItem;
@@ -25,8 +25,8 @@ const Diary =() =>{
         leftChild={<Button text={'< 뒤로가기'}
         onClick={()=> navigation(-1) }/>}
         rightChild={<Button text={'수정하기'}
+        onClick={()=>navigation(`/edit/${params.id}`)}
         />}/>
-        {console.log(curDiaryItem)}
         
         <Viewer emotionId={emotionId} content={content} createDate={createDate} />
     </div>
