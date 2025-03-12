@@ -4,11 +4,14 @@ import Editor from "../components/Editor";
 import { replace, useNavigate } from "react-router-dom";
 import { DiaryDispathcContex } from "../App";
 import { useContext } from "react";
+import usePageTitle from "../Hooks/usePageTitle";
 
 
 const New =( ) =>{
     const navigation = useNavigate();
     const {onCreate} = useContext(DiaryDispathcContex);
+
+    usePageTitle("새 일기 쓰기");
 
     const onSubmit= (newdata) =>{
         onCreate(newdata.createDate.getTime(), newdata.emotionId,newdata.content)
